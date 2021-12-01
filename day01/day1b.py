@@ -1,5 +1,3 @@
-import itertools as it
-
 f = open("input")
 nums = list(map(int, f.read().splitlines()))
 
