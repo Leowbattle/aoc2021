@@ -1,10 +1,7 @@
-import re
-
 f = open("input")
 lines = f.read().splitlines()
 
-cmd_re = re.compile(r"(forward|down|up) (\d+)")
-cmds = map(lambda l: cmd_re.match(l).groups(), lines)
+cmds = map(lambda l: l.split(), lines)
 
 horizontal = 0
 depth = 0
