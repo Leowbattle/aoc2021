@@ -1,4 +1,3 @@
-from os import get_terminal_size
 from collections import Counter
 
 f = open("input")
