@@ -11,7 +11,7 @@ def get_rating(which):
 	nums = lines.copy()
 	for i in range(width):	
 		c = Counter(l[i] for l in nums)
-		
+
 		if c['0'] == c['1']:
 			b = keep_pref
 		else:
