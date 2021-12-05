@@ -42,7 +42,7 @@ for l in lines:
 		for x in range(l.x1, l.x2 + 1):
 			grid[l.y1][x] += 1
 	else:
-		print(l)
+		# diagonal line
 
 		if l.x1 > l.x2:
 			l.x1, l.x2 = l.x2, l.x1
@@ -55,6 +55,6 @@ for l in lines:
 			grid[y][x] += 1
 			y += dy
 
-printGrid()
+# printGrid()
 score = sum(num >= 2 for row in grid for num in row)
 print(score)

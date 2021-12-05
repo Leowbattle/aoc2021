@@ -15,9 +15,6 @@ lines = f.read().splitlines()
 line_re = re.compile(r"(\d+),(\d+) -> (\d+),(\d+)")
 lines = [Line(*map(int, line_re.match(l).groups())) for l in lines]
 
-# only keep horizontal and vertical lines
-lines = [l for l in lines if l.x1 == l.x2 or l.y1 == l.y2]
-
 width  = max(it.chain.from_iterable([l.x1, l.x2] for l in lines)) + 1
 height = max(it.chain.from_iterable([l.y1, l.y2] for l in lines)) + 1
 
@@ -48,6 +45,6 @@ for l in lines:
 		# only vertical and horizontal
 		pass
 
-printGrid()
+# printGrid()
 score = sum(num >= 2 for row in grid for num in row)
 print(score)
