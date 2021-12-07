@@ -1,16 +1,19 @@
 f = open("input")
 crabs = sorted(map(int, f.read().split(',')))
 
-from math import comb
 # calculate the fuel cost for all crabs to go to position pos
 def cost(pos):
-	return sum(comb(abs(pos - c) + 1, 2) for c in crabs)
+	total = 0
+	for c in crabs:
+		dist = abs(pos - c)
+		total += dist * (dist + 1) / 2
+	return total
 
-lastCost = cost(0)
-for c in range(crabs[-1]):
-	newCost = cost(c)
-	if newCost > lastCost:
-		break
-	lastCost = newCost
+def sign(x):
+	return 1 if x >= 0 else -1
 
-print(lastCost)
+def g(pos):
+	return sum(pos - c + 0.5*sign(pos - c) for c in crabs)
+
+p = -g(0) / len(crabs)
+print(f"approximate O(n) solution: {cost(p)}")
