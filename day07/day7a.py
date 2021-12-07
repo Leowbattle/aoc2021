@@ -5,12 +5,4 @@ crabs = sorted(map(int, f.read().split(',')))
 def cost(pos):
 	return sum(abs(pos - c) for c in crabs)
 
-lastCost = cost(0)
-for c in crabs:
-	newCost = cost(c)
-	if newCost > lastCost:
-		pos = c
-		break
-	lastCost = newCost
-
-print(lastCost)
+print(cost(crabs[len(crabs) // 2]))
