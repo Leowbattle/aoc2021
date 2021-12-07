@@ -13,4 +13,5 @@ for i in range(1, 257):
 		fish2[time] += count
 	fish = fish2
 
+print(fish)
 print(fish.total())
