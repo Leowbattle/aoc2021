@@ -22,6 +22,7 @@ digit_segments = [
 ]
 
 problem = "acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab | cdfeb fcadb cdfeb cdbaf"
+# problem = "fbegcd cbd adcefb dageb afcb bc aefdc ecdab fgdeca fcdbega | efabcd cedba gadfec cb"
 patterns, encoded = problem.split(" | ")
 patterns = [set(p) for p in patterns.split()]
 encoded = [set(e) for e in encoded.split()]
@@ -61,7 +62,7 @@ def try_0(p: set[str]):
 	if not (p.issuperset(knowledge[2]) and p.issuperset(knowledge[4])):
 		return False
 
-	new_knowledge = p - knowledge[2] - knowledge[4] - knowledge[0]
+	new_knowledge = p - knowledge[2] - knowledge[4] - knowledge[0] - knowledge[5] - knowledge[6]
 	knowledge[1] = new_knowledge
 	knowledge[3] -= knowledge[1]
 
@@ -91,7 +92,41 @@ def try_2(p: set[str]):
 	if not (p.issuperset(knowledge[4])):
 		return False
 
-	print("PANIC MODE")
+	new_knowledge = p - knowledge[0] - knowledge[4]
+	k_3 = new_knowledge - knowledge[2]
+	k_2 = new_knowledge - knowledge[3]
+
+	knowledge[3] = k_3
+	knowledge[1] -= knowledge[3]
+
+	knowledge[2] = k_2
+	knowledge[5] -= knowledge[2]
+
+	return True
+
+def try_3(p: set[str]):
+	if not (p.issuperset(knowledge[2])):
+		return False
+
+	new_knowledge = p - knowledge[0] - knowledge[2] - knowledge[5]
+	k_6 = new_knowledge - knowledge[3]
+	k_3 = new_knowledge - knowledge[6]
+	
+	knowledge[6] = k_6
+	knowledge[4] -= knowledge[6]
+
+	knowledge[3] = k_3
+	knowledge[1] -= knowledge[3]
+
+	return True
+
+def try_5(p: set[str]):
+	if not (p.issuperset(knowledge[1])):
+		return False
+
+	new_knowledge = p - knowledge[0] - knowledge[1] - knowledge[6]
+	knowledge[5] = new_knowledge
+	knowledge[2] -= knowledge[5]
 
 	return True
 
@@ -101,7 +136,7 @@ while not all_knowledge():
 	if len(p) == 6:
 		try_0(p) or try_6(p) or try_9(p)
 	elif len(p) == 5:
-		try_2(p)
+		try_2(p) or try_3(p) or try_5(p)
 
 print(knowledge)
 knowledge = {knowledge[i].pop(): i for i in range(len(knowledge))}
