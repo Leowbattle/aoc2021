@@ -15,15 +15,13 @@ sizes = {a: "big" if a.isupper() else "small" for a in caves}
 def find_paths(a: str, marked: set):
 	paths = []
 
-	if a == "end":
-		return paths
-
 	if sizes[a] == "small":	
 		marked.add(a)
 
 	for b in caves[a]:
 		if b == "end":
 			paths.append([a, "end"])
+			continue
 
 		if b in marked:
 			continue
