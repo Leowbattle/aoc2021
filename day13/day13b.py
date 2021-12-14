@@ -52,10 +52,18 @@ def do_fold(fold):
 	elif fold[0] == 'y':
 		do_y_fold()
 
+i = 1
 for fold in folds:
+	print(i, len(folds))
+	i += 1
 	do_fold(fold)
 
-print_paper()
-
 score = sum(row.count('#') for row in paper)
-print(score)
+
+for row in paper:
+	for i in range(len(row)):
+		if row[i] == '.':
+			row[i] = ' '
+		elif row[i] == '#':
+			row[i] = '█'
+print_paper()
