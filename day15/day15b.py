@@ -16,13 +16,11 @@ def get(p):
 	qy, ry = divmod(p[1], data_height)
 
 	risk = nums[ry][rx]
-	for i in range(qx + qy):
+	for _ in range(qx + qy):
 		risk += 1
 		if risk > 9:
 			risk = 1
 	return risk
-
-get((1,1))
 
 def adjacent(p):
 	x, y = p
