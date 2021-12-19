@@ -57,22 +57,21 @@ class Num:
 		return prev
 
 	def reduce(self):
-		# print(self.to_arr())
-		while self.reduce0(0):
-			# print(self.to_arr())
-			pass
-		# print(self.to_arr())
+		print(self.to_arr())
+		while True:
+			e = self.explode(0)
+			if e:
+				continue
+			s = self.split()
+			if s:
+				continue
 
-	def reduce0(self, depth):
+			break
+		print(self.to_arr())
+
+	def explode(self, depth):
 		if self.val != None:
-			if self.val < 10:
-				return False
-
-			self.left = Num(val=self.val // 2, parent=self)
-			self.right = Num(val=(self.val + 1) // 2, parent=self)
-			self.val = None
-
-			return True
+			return False
 
 		if depth == 4:
 			l = self.left.val
@@ -90,25 +89,48 @@ class Num:
 
 			return True
 
-		if self.left.reduce0(depth + 1):
+		if self.left.explode(depth + 1):
 			return True
-		if self.right.reduce0(depth + 1):
+		if self.right.explode(depth + 1):
 			return True
 
-# n = [[[[0,[4,5]],[0,0]],[[[4,5],[2,6]],[9,5]]],[7,[[[3,7],[4,3]],[[6,3],[8,8]]]]]
+	def split(self):
+		if self.val != None:
+			if self.val < 10:
+				return False
+
+			self.left = Num(val=self.val // 2, parent=self)
+			self.right = Num(val=(self.val + 1) // 2, parent=self)
+			self.val = None
+
+			return True
+
+		if self.left.split():
+			return True
+		if self.right.split():
+			return True
+	
+	def magnitude(self):
+		if self.val != None:
+			return self.val
+		return 3 * self.left.magnitude() + 2 * self.right.magnitude()
+
+# n = [[1,2][[3,4],5]]
 # num = Num.from_arr(n)
 # num.reduce()
 # print(num.to_arr())
 
-f = open("test")
+f = open(r"input")
 nums = [Num.from_arr(literal_eval(l)) for l in f.read().splitlines()]
 
 result = nums[0]
-print(result.to_arr())
+# print(result.to_arr())
 for n in nums[1:]:
 	res = Num(left=result, right=n)
 	result.parent = res
 	n.parent = res
 	res.reduce()
 	result = res
-	print(result.to_arr())
+	# print(result.to_arr())
+
+print(result.magnitude())
