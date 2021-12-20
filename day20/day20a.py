@@ -1,4 +1,4 @@
-f = open("test")
+f = open("input")
 algo, img = f.read().split("\n\n")
 
 img = [list(l) for l in img.splitlines()]
@@ -30,18 +30,25 @@ def getpixel(p):
 	return algo[bits] == '#'
 
 def enhance():
-	global img
+	global img, mode
+
+	minx = min(img, key=lambda p: p[0])[0]
+	maxx = max(img, key=lambda p: p[0])[0]
+
+	miny = min(img, key=lambda p: p[1])[1]
+	maxy = max(img, key=lambda p: p[1])[1]
 
 	img2 = set()
-	for p in img:
-		if getpixel(p):
-			img2.add(p)
-		
-		x, y = p
-		for j in range(y - 1, y + 2):
-			for i in range(x - 1, x + 2):
-				p2 = (i, j)
-				if p2 not in img2 and getpixel(p2):
-					img2.add(p2)
+
+	for x in range(minx - 10, maxx + 10):
+		for y in range(miny - 10, maxy + 10):
+			p = getpixel((x, y))
+			if p:
+				img2.add((x, y))
 
 	img = img2
+
+enhance()
+enhance()
+
+print(img_str())
