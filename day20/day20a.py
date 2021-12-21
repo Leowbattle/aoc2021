@@ -48,7 +48,8 @@ def enhance():
 
 	img = img2
 
-enhance()
-enhance()
+for i in range(50):
+	print(i)
+	enhance()
 
-print(img_str())
+# print(img_str())
